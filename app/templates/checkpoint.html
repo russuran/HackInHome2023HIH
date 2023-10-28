@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='checkpoint.css') }}" />
+    <title>Загрузка файлов</title>
+  </head>
+  <body>
+    <h1>Загрузка файлов</h1>
+ <form action="" method="post"  novalidate>
+    {{ form.hidden_tag() }}
+
+        {{ form.type.label }}
+        {{ form.type }}
+        {% for error in form.type.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        {{ form.name.label }}
+        {{ form.name(size=32) }}
+        {% for error in form.name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        {{ form.number.label }}
+        {{ form.number(size=32) }}
+        {% for error in form.number.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        {{ form.timestamp_added.label }}
+        {{ form.timestamp_added(size=32) }}
+        {% for error in form.timestamp_added.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+
+        {{ form.timestamp_accepted.label }}
+        {{ form.timestamp_accepted(size=32) }}
+        {% for error in form.timestamp_accepted.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        file = FileField('File')
+
+        {{ form.submit() }}
+    </form>
+  </body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" title="Coding design">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>resp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <div class="container">
+        <div class="optional"><a href="/add_user"> Создать пользователя </a></div>
+        <div class="optional"><a href="/add_file"> Создать документ </a></div>
+
+        <div class="optional"><a href="/logout"> Выход </a></div>
+    </div>
+    <main class="table">
+      <section class="table__header">
+        <thead>
+          <button class="search-form_btn" style="z-index: 1;">
+          </button>
+          <div class="input-group">
+            <input class="inputgr" name="s" placeholder="№" type="search" />
+          </div>
+          <div class="input-group">
+            <input class="inputgr" name="s" placeholder="Тип" type="search" />
+          </div>
+          <div class="input-group">
+            <input class="inputgr" name="s" placeholder="Название" type="search" />
+          </div>
+          <div class="input-group">
+            <input class="inputgr" name="s" placeholder="Номер" type="search" />
+          </div>
+          <div class="input-group">
+            <input class="inputgr" name="s" placeholder="Дата выхода" type="search" />
+          </div>
+          <div class="input-group">
+            <input class="inputgr" name="s" placeholder="Дата ввода действие" type="search" />
+          </div>
+          <div class="input-group">
+            <input class="inputgr" name="s" placeholder="Ключевые слова" type="search" />
+          </div>
+        </thead>
+      </section>
+      <section class="table__body">
+        <table>
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Тип</th>
+              <th>Название</th>
+              <th>Номер</th>
+              <th>Дата выхода</th>
+              <th>Дата ввода действия</th>
+              <th>Документ
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                Zinzu Chan Lee
+              </td>
+              <td>Seoul</td>
+              <td>17 Dec, 2022</td>
+              <td>
+                <a href="#" class="button" id="button12">Document</a>
+              </td>
+              <td>$128.90</td>
+              <td><document>number</document></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jeet Saru</td>
+              <td>Kathmandu</td>
+              <td>27 Aug, 2023</td>
+              <td>
+                <a href="#" class="button" id="button13">Document</a>
+              </td>
+              <td>$5350.50</td>
+              <td><document>number</document></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Sonal Gharti</td>
+              <td>Tokyo</td>
+              <td>14 Mar, 2023</td>
+              <td>
+                <a href="#" class="button" id="button14">Document</a>
+              </td>
+              <td>$210.40</td>
+              <td><document>number</document></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Alson GC</td>
+              <td>New Delhi</td>
+              <td>25 May, 2023</td>
+              <td>
+                <a href="#" class="button" id="button15">Document</a>
+              </td>
+              <td>$149.70</td>
+              <td><document>number</document></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Sarita Limbu</td>
+              <td>Paris</td>
+              <td>23 Apr, 2023</td>
+              <td>
+                <a href="#" class="button" id="button16">Document</a>
+              </td>
+              <td>$399.99</td>
+              <td><document>number</document></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Alex Gonley</td>
+              <td>London</td>
+              <td>23 Apr, 2023</td>
+              <td>
+                <a href="#" class="button" id="button17">Document</a>
+              </td>
+              <td>$399.99</td>
+              <td><document>number</document></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>Jeet Saru</td>
+              <td>New York</td>
+              <td>20 May, 2023</td>
+              <td>
+                <a href="#" class="button" id="button18">Document</a>
+              </td>
+              <td>$399.99</td>
+              <td><document>number</document></td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>
+                Aayat Ali Khan
+              </td>
+              <td>Islamabad</td>
+              <td>30 Feb, 2023</td>
+              <td>
+                <a href="#" class="button" id="button19">Document</a>
+              </td>
+              <td>$149.70</td>
+              <td><document>number</document></td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>Alson GC</td>
+              <td>Dhaka</td>
+              <td>22 Dec, 2023</td>
+              <td>
+                <a href="#" class="button" id="button20">Document</a>
+              </td>
+              <td>$249.99</td>
+              <td><document>number</document></td>
+              <tr>
+                <td>2</td>
+                <td>Jeet Saru</td>
+                <td>Kathmandu</td>
+                <td>27 Aug, 2023</td>
+                <td>
+                  <a href="#" class="button" id="button21">Document</a>
+                </td>
+                <td>$5350.50</td>
+                <td><document>number</document></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jeet Saru</td>
+                <td>Kathmandu</td>
+                <td>27 Aug, 2023</td>
+                <td>
+                  <a href="#" class="button" id="button21">Document</a>
+                </td>
+                <td>$5350.50</td>
+                <td><document>number</document></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jeet Saru</td>
+                <td>Kathmandu</td>
+                <td>27 Aug, 2023</td>
+                <td>
+                  <a href="#" class="button" id="button21">Document</a>
+                </td>
+                <td>$5350.50</td>
+                <td><document>number</document></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jeet Saru</td>
+                <td>Kathmandu</td>
+                <td>27 Aug, 2023</td>
+                <td>
+                  <a href="#" class="button" id="button21">Document</a>
+                </td>
+                <td>$5350.50</td>
+                <td><document>number</document></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jeet Saru</td>
+                <td>Kathmandu</td>
+                <td>27 Aug, 2023</td>
+                <td>
+                  <a href="#" class="button" id="button21">Document</a>
+                </td>
+                <td>$5350.50</td>
+                <td><document>number</document></td>
+              </tr>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+
+</html>

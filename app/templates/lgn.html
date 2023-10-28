@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}" />
+    <title>Форма входа</title>
+  </head>
+  <body>
+    <div class="container"></div>
+    <h1>Форма входа</h1>
+
+    <form action="" method="post"  novalidate>
+      {{ form.hidden_tag() }}
+
+        {{ form.username.label }}
+        {{ form.username(size=32) }}
+        {% for error in form.username.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        {{ form.password.label }}
+        {{ form.password(size=32) }}
+        {% for error in form.password.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        {{ form.submit() }}
+    </form>
+  </body>
+</html>
