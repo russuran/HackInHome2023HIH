@@ -160,12 +160,12 @@ def index():
                         key_words_count[result[k][0]] += result[k][6].count(m)
             if sum(key_words_count.values()) > maxx:
                 maxx = key_words_count.values()
-                flname_to_show = result[k][7]
+                flname_to_show = result[i][7]
 
             with sq.connect("app.db") as con:
                 cur = con.cursor()
 
-                cur.execute("SELECT * FROM files WHERE filpath = ?", (flname_to_show, ))
+                cur.execute("SELECT * FROM files WHERE filepath = ?", (flname_to_show, ))
 
                 result = cur.fetchall()
 
