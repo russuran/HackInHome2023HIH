@@ -140,7 +140,7 @@ def index():
             result = cur.fetchall()
         maxx = 0
         for i in range(len(result)):
-            res = f'{result[i][6]} '
+            res = ''
 
             try:
                 data_to_go = made_keywords(made_text(result[i][7]))
@@ -159,7 +159,7 @@ def index():
                         key_words_count[result[k][0]] = 0
                         key_words_count[result[k][0]] += result[k][6].count(m)
             if sum(key_words_count.values()) > maxx:
-                maxx = key_words_count.values()
+                maxx = sum(key_words_count.values())
                 flname_to_show = result[i][7]
 
             with sq.connect("app.db") as con:
