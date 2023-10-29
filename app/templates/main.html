@@ -1,47 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" title="Coding design">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>resp</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   </head>
   <body>
     <div class="container">
+      <div class="left-side">
         <div class="optional"><a href="/add_user"> Создать пользователя </a></div>
         <div class="optional"><a href="/add_file"> Создать документ </a></div>
 
         <div class="optional"><a href="/logout"> Выход </a></div>
+
+      </div>
+
+      <div class="right-side">
+        <div class="optional" style="width:10vh; margin-right: 0px;"><a href="#popup"> Опции </a></div>
+      </div>
     </div>
+
+
     <main class="table">
-      <section class="table__header">
-        <thead>
-          <button class="search-form_btn" style="z-index: 1;">
-          </button>
-          <div class="input-group">
-            <input class="inputgr" name="s" placeholder="№" type="search" />
-          </div>
-          <div class="input-group">
-            <input class="inputgr" name="s" placeholder="Тип" type="search" />
-          </div>
-          <div class="input-group">
-            <input class="inputgr" name="s" placeholder="Название" type="search" />
-          </div>
-          <div class="input-group">
-            <input class="inputgr" name="s" placeholder="Номер" type="search" />
-          </div>
-          <div class="input-group">
-            <input class="inputgr" name="s" placeholder="Дата выхода" type="search" />
-          </div>
-          <div class="input-group">
-            <input class="inputgr" name="s" placeholder="Дата ввода действие" type="search" />
-          </div>
-          <div class="input-group">
-            <input class="inputgr" name="s" placeholder="Ключевые слова" type="search" />
-          </div>
-        </thead>
-      </section>
       <section class="table__body">
         <table>
           <thead>
@@ -57,168 +36,99 @@
             </tr>
           </thead>
           <tbody>
+            {% for part in data %}
             <tr>
-              <td>1</td>
+              <td>{{ part[0] }}</td>
               <td>
-                Zinzu Chan Lee
+                {{ part[1] }}
               </td>
-              <td>Seoul</td>
-              <td>17 Dec, 2022</td>
+              <td>{{ part[2] }}</td>
+              <td>{{ part[3] }}</td>
               <td>
-                <a href="#" class="button" id="button12">Document</a>
+                {{ part[4][:10] }}
               </td>
-              <td>$128.90</td>
-              <td><document>number</document></td>
+              <td>{{ part[5][:10] }}</td>
+              <td><a href="#" class="button" id="button12">{{ part[7] }}</a></td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>Jeet Saru</td>
-              <td>Kathmandu</td>
-              <td>27 Aug, 2023</td>
-              <td>
-                <a href="#" class="button" id="button13">Document</a>
-              </td>
-              <td>$5350.50</td>
-              <td><document>number</document></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Sonal Gharti</td>
-              <td>Tokyo</td>
-              <td>14 Mar, 2023</td>
-              <td>
-                <a href="#" class="button" id="button14">Document</a>
-              </td>
-              <td>$210.40</td>
-              <td><document>number</document></td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Alson GC</td>
-              <td>New Delhi</td>
-              <td>25 May, 2023</td>
-              <td>
-                <a href="#" class="button" id="button15">Document</a>
-              </td>
-              <td>$149.70</td>
-              <td><document>number</document></td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Sarita Limbu</td>
-              <td>Paris</td>
-              <td>23 Apr, 2023</td>
-              <td>
-                <a href="#" class="button" id="button16">Document</a>
-              </td>
-              <td>$399.99</td>
-              <td><document>number</document></td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>Alex Gonley</td>
-              <td>London</td>
-              <td>23 Apr, 2023</td>
-              <td>
-                <a href="#" class="button" id="button17">Document</a>
-              </td>
-              <td>$399.99</td>
-              <td><document>number</document></td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>Jeet Saru</td>
-              <td>New York</td>
-              <td>20 May, 2023</td>
-              <td>
-                <a href="#" class="button" id="button18">Document</a>
-              </td>
-              <td>$399.99</td>
-              <td><document>number</document></td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>
-                Aayat Ali Khan
-              </td>
-              <td>Islamabad</td>
-              <td>30 Feb, 2023</td>
-              <td>
-                <a href="#" class="button" id="button19">Document</a>
-              </td>
-              <td>$149.70</td>
-              <td><document>number</document></td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>Alson GC</td>
-              <td>Dhaka</td>
-              <td>22 Dec, 2023</td>
-              <td>
-                <a href="#" class="button" id="button20">Document</a>
-              </td>
-              <td>$249.99</td>
-              <td><document>number</document></td>
-              <tr>
-                <td>2</td>
-                <td>Jeet Saru</td>
-                <td>Kathmandu</td>
-                <td>27 Aug, 2023</td>
-                <td>
-                  <a href="#" class="button" id="button21">Document</a>
-                </td>
-                <td>$5350.50</td>
-                <td><document>number</document></td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jeet Saru</td>
-                <td>Kathmandu</td>
-                <td>27 Aug, 2023</td>
-                <td>
-                  <a href="#" class="button" id="button21">Document</a>
-                </td>
-                <td>$5350.50</td>
-                <td><document>number</document></td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jeet Saru</td>
-                <td>Kathmandu</td>
-                <td>27 Aug, 2023</td>
-                <td>
-                  <a href="#" class="button" id="button21">Document</a>
-                </td>
-                <td>$5350.50</td>
-                <td><document>number</document></td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jeet Saru</td>
-                <td>Kathmandu</td>
-                <td>27 Aug, 2023</td>
-                <td>
-                  <a href="#" class="button" id="button21">Document</a>
-                </td>
-                <td>$5350.50</td>
-                <td><document>number</document></td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jeet Saru</td>
-                <td>Kathmandu</td>
-                <td>27 Aug, 2023</td>
-                <td>
-                  <a href="#" class="button" id="button21">Document</a>
-                </td>
-                <td>$5350.50</td>
-                <td><document>number</document></td>
-              </tr>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </section>
     </main>
   </body>
+
+<!-- popup -->
+<div id="popup" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Опции</h3>
+        <a href="#close" title="Close" class="close">×</a>
+      </div>
+        <form action="" method="post"  novalidate>
+        {{ form.hidden_tag() }}
+
+          {{ form.id.label }}
+          {{ form.id(size=32) }}
+          {% for error in form.id.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          {{ form.type.label }}
+          {{ form.type }}
+          {% for error in form.type.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          {{ form.name.label }}
+          {{ form.name(size=32) }}
+          {% for error in form.name.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          {{ form.number.label }}
+          {{ form.number(size=32) }}
+          {% for error in form.number.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          {{ form.timestamp_added_1.label }}
+          {{ form.timestamp_added_1(size=32) }}
+          {% for error in form.timestamp_added_1.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          {{ form.timestamp_added_2.label }}
+          {{ form.timestamp_added_2(size=32) }}
+          {% for error in form.timestamp_added_2.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          {{ form.timestamp_accepted_1.label }}
+          {{ form.timestamp_accepted_1(size=32) }}
+          {% for error in form.timestamp_accepted_1.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          {{ form.timestamp_accepted_2.label }}
+          {{ form.timestamp_accepted_2(size=32) }}
+          {% for error in form.timestamp_accepted_2.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          {{ form.key_words.label }}
+          {{ form.key_words(size=32) }}
+          {% for error in form.key_words.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+
+
+
+          {{ form.submit() }}
+      </form>
+    </div>
+  </div>
+</div>
 
 </html>

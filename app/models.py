@@ -23,13 +23,15 @@ class User(UserMixin, db.Model):
 
 class Files(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.String(20))
-    name = db.Column(db.String(40))
-    number = db.Column(db.String(20))
+    type = db.Column(db.String(64))
+    name = db.Column(db.String(64))
+    number = db.Column(db.String(64))
     timestamp_added = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     timestamp_added_accepted = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    file = db.Column(db.LargeBinary)
+    filepath = db.Column(db.String(64))
     key_words = db.Column(db.String(1024))
 
     def __repr__(self):
         return '<File {}>'.format(self.body)
+
+

@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1>Загрузка файлов</h1>
- <form action="" method="post"  novalidate>
+ <form method=post enctype=multipart/form-data novalidate>
     {{ form.hidden_tag() }}
 
         {{ form.type.label }}
@@ -40,7 +40,19 @@
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
 
-        file = FileField('File')
+        {{ form.filepath.label }}
+        {{ form.filepath }}
+        {% for error in form.filepath.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        {{ form.key_words.label }}
+        {{ form.key_words(size=32) }}
+        {% for error in form.key_words.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+
 
         {{ form.submit() }}
     </form>

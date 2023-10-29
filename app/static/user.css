@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   font-family: sans-serif;
+  box-shadow: inset;
 }
 
 body {
@@ -12,11 +13,11 @@ body {
 
 h1 {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 150px;
 }
 
 form {
-    max-width: 300px;
+    width: 300px;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
@@ -80,4 +81,10 @@ width: 100%;
     box-sizing: border-box;
     font-size: 14px;
 
+}
+
+
+.typetext {
+  border-radius: 6px;
+  border-color: rgba(0, 0, 0, 0.359);
 }

@@ -4,22 +4,20 @@
 }
 
 body {
-  min-height: 100vh;
   background: center;
   display: flex;
   justify-content: center;
   align-items: center;
   background-image: url("32307-city-glam-marburg.jpg");
-  backdrop-filter: blur(50%);
   overflow: hidden;
   flex-direction: column;
-  order: -1;
+
 }
 
 main.table {
   background-color: rgba(255, 255, 255, 0.073);
   width: 82vw;
-  height: 95vh;
+  height: 86vh;
   backdrop-filter: blur(7px);
 
   overflow: overlay;
@@ -58,11 +56,9 @@ main.table {
   outline: none;
   background: #e8a228;
   color: #000000;
-  transition: all 0.3s;
 }
 
 .inputgr:hover {
-  transition: all 0.3s;
   transform: scale(1.2);
   box-shadow: 8px 10px 5px 2px rgba(247, 227, 8, 0.342);
 }
@@ -171,9 +167,13 @@ tbody tr.hide td img {
 
 .button {
   border-radius: 6px;
-  color: white;
-  transition: 0.2s linear;
-  background: #f7b321;
+    color: white;
+    transition: 0.2s linear;
+    background: #f7b321;
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
 }
 
 .button:hover {
@@ -228,21 +228,212 @@ tbody td.active {
 
 
 .optional{
+    display: flex;
     width: 30vh;
     height: 40px;
-    background-color: #E8A228;
+    background-color: #ccc541;
     margin-right: 30px;
-    border-radius: 20px;
-    display: flex;
+    border-radius: 12px;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s;
+}
 
-
+.optional:hover {
+  background-color: #999435;
+  transition: all 0.3s;
 }
 
 .container{
     width:1230px;
     display: flex;
     flex-direction: row;
-    margin-bottom: 5px;
+    margin-bottom: 30px;
+    justify-content: space-between;
+}
+
+.left-side{
+    display: flex;
+    flex-direction: row;
+}
+
+form {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+input[name="submit"] {
+  background-color: #ccc541;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s;
+}
+
+input[name="key_words"] {
+    margin-bottom: 10px;
+}
+
+input[name="submit"]:hover {
+  background-color: #999435;
+  transition: all 0.3s;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input {
+width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+
+}
+
+.modal {
+    position: fixed; /* фиксированное положение */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5); /* фон */
+    z-index: 1050;
+    opacity: 0; /* по умолчанию модальное окно прозрачно */
+    -webkit-transition: opacity 200ms ease-in;
+    -moz-transition: opacity 200ms ease-in;
+    transition: opacity 200ms ease-in; /* анимация перехода */
+    pointer-events: none; /* элемент невидим для событий мыши */
+    margin: 0;
+    padding: 0;
+}
+/* При отображении модального окно */
+.modal:target {
+    opacity: 1; /* делаем окно видимым */
+	  pointer-events: auto; /* элемент видим для событий мыши */
+    overflow-y: auto; /* добавляем прокрутку по y, когда элемент не помещается на страницу */
+}
+/* ширина модального окна и его отступы от экрана */
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 10px;
+}
+@media (min-width: 576px) {
+  .modal-dialog {
+      max-width: 500px;
+      margin: 30px auto; /* отображение окна по центру */
+  }
+}
+/* Стили для блока с контентом окна */
+.modal-content {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+}
+@media (min-width: 768px) {
+  .modal-content {
+      -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+      box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  }
+}
+/* Стили заголовка окна */
+.modal-header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #eceeef;
+}
+.modal-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+/* Стили кнопки "х" ("Закрыть")  */
+.close {
+    float: right;
+    font-family: sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    text-decoration: none;
+}
+/* Стили для закрывающей кнопки в фокусе или наведении */
+.close:focus, .close:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: .75;
+}
+/* Стили блока основного содержимого окна */
+.modal-body {
+  position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 15px;
+    overflow: auto;
 }

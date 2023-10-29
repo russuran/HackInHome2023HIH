@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Добавить пользователя</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='user.css') }}" />
+  </head>
+  <body>
+    <h1>Добавить пользователя</h1>
+
+    <form action="" method="post"  novalidate>
+        {{ form.hidden_tag() }}
+
+          {{ form.username.label }}
+          {{ form.username(size=32) }}
+          {% for error in form.username.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          {{ form.password.label }}
+          {{ form.password(size=32) }}
+          {% for error in form.password.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          {{ form.checkbox1.label }}
+          {{ form.checkbox1 }}
+          {% for error in form.checkbox1.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          {{ form.checkbox2.label }}
+          {{ form.checkbox2 }}
+          {% for error in form.checkbox1.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+
+
+
+
+          {{ form.submit() }}
+      </form>
+
+  </body>
+</html>
