@@ -137,37 +137,42 @@ def index():
             key_words_count = {}
             key_words = key_words.split(' ')
 
+
+
+        if key_words != ['']:
+            maxx = 0
+            for i in range(len(result)):
+                res = ''
+
+                try:
+                    data_to_go = made_keywords(made_text(result[i][7]))
+                    print(data_to_go)
+                    for j in data_to_go:
+                        res += f' str(j)'
+                except Exception as error:
+                    print(error)
+
+                key_words = res
+                for k in range(len(result)):
+                    for m in key_words:
+                        try:
+                            key_words_count[result[k][0]] += result[k][6].count(m)
+                        except:
+                            key_words_count[result[k][0]] = 0
+                            key_words_count[result[k][0]] += result[k][6].count(m)
+                print(key_words_count.values())
+                if sum(key_words_count.values()) > maxx:
+                    maxx = sum(key_words_count.values())
+                    flname_to_show = result[i][7]
+
+                with sq.connect("app.db") as con:
+                    cur = con.cursor()
+
+                    cur.execute("SELECT * FROM files WHERE filepath = ?", (flname_to_show, ))
+
+                    result = cur.fetchall()
+        else:
             result = cur.fetchall()
-        maxx = 0
-        for i in range(len(result)):
-            res = ''
-
-            try:
-                data_to_go = made_keywords(made_text(result[i][7]))
-                print(data_to_go)
-                for j in data_to_go:
-                    res += f' str(j)'
-            except Exception as error:
-                print(error)
-
-            key_words = res
-            for k in range(len(result)):
-                for m in key_words:
-                    try:
-                        key_words_count[result[k][0]] += result[k][6].count(m)
-                    except:
-                        key_words_count[result[k][0]] = 0
-                        key_words_count[result[k][0]] += result[k][6].count(m)
-            if sum(key_words_count.values()) > maxx:
-                maxx = sum(key_words_count.values())
-                flname_to_show = result[i][7]
-
-            with sq.connect("app.db") as con:
-                cur = con.cursor()
-
-                cur.execute("SELECT * FROM files WHERE filepath = ?", (flname_to_show, ))
-
-                result = cur.fetchall()
 
         return render_template('main.html', form=form, data=result)
 
