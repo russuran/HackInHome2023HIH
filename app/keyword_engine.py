@@ -1,114 +1,44 @@
-import glob
-import os
-import sys
-
-import numpy as np
-
-os.environ['PATH'] += os.pathsep + os.path.join(os.getcwd(), 'Tesseract-OCR')
-extensions = [
-    '.xlsx', '.docx', '.pptx',
-    '.pdf', '.txt', '.md', '.htm', 'html',
-    '.jpg', '.jpeg', '.png', '.gif'
-]
-
-import warnings
-import torch, textract, pdfplumber
-from cleantext import clean
-from razdel import sentenize
-from sklearn.neighbors import NearestNeighbors
-from sentence_transformers import SentenceTransformer
-
-warnings.filterwarnings('ignore')
-
-embedder = SentenceTransformer('/distillUSE')
+import yake
+import docx
+import re
+from pdfminer.high_level import extract_text
+import ezodf
+import pymorphy2
 
 
-def processor(path, embedder):
+def made_text(file_name):
+    name_split = file_name.split('/')[-1]
+    tip = name_split.split('.')[-1]
+    if tip == 'txt':
+        return f'{name_split} ' + open(file_name, encoding='utf-8').read()
+    if tip in ['docx', 'docm']:
+        doc = docx.Document(file_name)
+        return f'{name_split} ' + ''.join([p.text for p in doc.paragraphs])
+    if tip == 'pdf':
+        return f'{name_split} ' + ' '.join(re.findall(r'\b\w+\b', extract_text(file_name)))
+    if tip in ('odt', 'ods', 'odg', 'odp'):
+        fl = ezodf.opendoc(file_name)
+        print(str(fl))
+        out = []
+        for i in fl.body:
+            out.extend(re.findall(r"\b\w+\b", i.plaintext().lower()))
+        return f'{name_split} ' + ' '.join(out)
+
+
+def made_keywords(text):
     try:
-        if path.lower().endswith('.pdf'):
-            with pdfplumber.open(path) as pdf:
-                if len(pdf.pages):
-                    text = ' '.join([
-                        page.extract_text() or '' for page in pdf.pages if page
-                    ])
-        elif path.lower().endswith('.md') or path.lower().endswith('.txt'):
-            with open(path, 'r', encoding='UTF-8') as fd:
-                text = fd.read()
-        else:
-            text = textract.process(path, language='rus+eng').decode('UTF-8')
-        if path.lower()[-4:] in ['.jpg', 'jpeg', '.gif', '.png']:
-            text = clean(
-                text,
-                fix_unicode=False, lang='ru', to_ascii=False, lower=False,
-                no_line_breaks=True
-            )
-        else:
-            text = clean(
-                text,
-                lang='ru', to_ascii=False, lower=False, no_line_breaks=True
-            )
-        sentences = list(map(lambda substring: substring.text, sentenize(text)))
-    except Exception as exception:
-        return None
-    if not len(sentences):
-        return None
-    return {
-        'filepath': [path] * len(sentences),
-        'sentences': sentences,
-        'vectors': [vector.astype(float).tolist() for vector in embedder.encode(
-            sentences
-        )]
-    }
+        nmbr = int(count_words(text) * 0.10)
+        extractor_ru = yake.KeywordExtractor(
+            lan="ru",
+            n=4,
+            dedupLim=0.6,
+            top=nmbr
+        )
+        return list(x[0].lower() for x in sorted(tuple(extractor_ru.extract_keywords(text)), key=lambda y: y[1]))
+    except Exception as er:
+        return ['document']
 
 
-def indexer(files, embedder):
-    for file in files:
-        processed = processor(file, embedder)
-        if processed is not None:
-            yield processed
-
-
-def counter(path):
-    if not os.path.exists(path):
-        return None
-    for file in glob.iglob(path + '/**', recursive=True):
-        extension = os.path.splitext(file)[1].lower()
-        if extension in extensions:
-            yield file
-
-
-def search(engine, text, sentences, files):
-    indices = engine.kneighbors(
-        embedder.encode([text])[0].astype(float).reshape(1, -1),
-        return_distance=True
-    )
-
-    distance = indices[0][0][0]
-    position = indices[1][0][0]
-
-    print(
-        'Релевантность "%.3f' % (1 - distance / 2),
-        'Фраза: "%s", файл "%s"' % (sentences[position], files[position])
-    )
-
-
-print('Поиск файлов "%s"' % sys.argv[1])
-paths = list(counter(sys.argv[1]))
-
-print('Индексация "%s"' % sys.argv[1])
-db = list(indexer(paths, embedder))
-
-sentences, files, vectors = [], [], []
-for item in db:
-    sentences += item['sentences']
-    files += item['filepath']
-    vectors += item['vectors']
-
-engine = NearestNeighbors(n_neighbors=1, metric='cosine').fit(
-    np.array(vectors).reshape(len(vectors), -1)
-)
-
-query = input('Что искать: ')
-while query:
-    search(engine, query, sentences, files)
-    query = input('Что искать: ')
+def count_words(text):
+    n = len(re.findall(r'\b\w+\b', text))
+    return float(n)

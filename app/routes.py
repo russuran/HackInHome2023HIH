@@ -10,6 +10,51 @@ from app import login
 import os
 import sqlite3 as sq
 from flask import request
+from werkzeug.utils import secure_filename
+import yake
+import docx
+import re
+from pdfminer.high_level import extract_text
+import ezodf
+
+
+def made_text(file_name):
+    name_split = file_name.split('/')[-1]
+    tip = name_split.split('.')[-1]
+    if tip == 'txt':
+        return f'{name_split} ' + open(file_name, encoding='utf-8').read()
+    if tip in ['docx', 'docm']:
+        doc = docx.Document(file_name)
+        return f'{name_split} ' + ''.join([p.text for p in doc.paragraphs])
+    if tip == 'pdf':
+        return f'{name_split} ' + ' '.join(re.findall(r'\b\w+\b', extract_text(file_name)))
+    if tip in ('odt', 'ods', 'odg', 'odp'):
+        fl = ezodf.opendoc(file_name)
+        print(str(fl))
+        out = []
+        for i in fl.body:
+            out.extend(re.findall(r"\b\w+\b", i.plaintext().lower()))
+        return f'{name_split} ' + ' '.join(out)
+    return 0
+
+
+def made_keywords(text):
+    try:
+        nmbr = int(count_words(text) * 0.10)
+        extractor_ru = yake.KeywordExtractor(
+            lan="ru",
+            n=4,
+            dedupLim=0.6,
+            top=nmbr
+        )
+        return list(x[0].lower() for x in sorted(tuple(extractor_ru.extract_keywords(text)), key=lambda y: y[1]))
+    except Exception as er:
+        return ['document']
+
+
+def count_words(text):
+    n = len(re.findall(r'\b\w+\b', text))
+    return float(n)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -37,7 +82,8 @@ def index():
         timestamp_accepted_2 = form.timestamp_accepted_2.data
         key_words = form.key_words.data
 
-        print(idd, typee, name, number, timestamp_added_1, timestamp_added_2, timestamp_accepted_1, timestamp_accepted_2, key_words)
+        print(idd, typee, name, number, timestamp_added_1, timestamp_added_2, timestamp_accepted_1,
+              timestamp_accepted_2, key_words)
         # самый жёсткий хард-кодинг тут, 6:37;
         work_string = "SELECT * FROM files WHERE "
         args = []
@@ -88,7 +134,40 @@ def index():
 
             cur.execute(work_string, args)
 
+            key_words_count = {}
+            key_words = key_words.split(' ')
+
             result = cur.fetchall()
+        maxx = 0
+        for i in range(len(result)):
+            res = f'{result[i][6]} '
+
+            try:
+                data_to_go = made_keywords(made_text(result[i][7]))
+                print(data_to_go)
+                for j in data_to_go:
+                    res += f' str(j)'
+            except Exception as error:
+                print(error)
+
+            key_words = res
+            for k in range(len(result)):
+                for m in key_words:
+                    try:
+                        key_words_count[result[k][0]] += result[k][6].count(m)
+                    except:
+                        key_words_count[result[k][0]] = 0
+                        key_words_count[result[k][0]] += result[k][6].count(m)
+            if sum(key_words_count.values()) > maxx:
+                maxx = key_words_count.values()
+                flname_to_show = result[k][7]
+
+            with sq.connect("app.db") as con:
+                cur = con.cursor()
+
+                cur.execute("SELECT * FROM files WHERE filpath = ?", (flname_to_show, ))
+
+                result = cur.fetchall()
 
         return render_template('main.html', form=form, data=result)
 
@@ -127,7 +206,6 @@ def add_user():
         return redirect(url_for('login'))
     form = AddUser()
     if form.is_submitted() and form.validate():
-
         return redirect(url_for('index'))
 
     return render_template('user.html', form=form)
@@ -141,6 +219,7 @@ def add_file():
     if form.is_submitted() and form.validate():
         fl = request.files['filepath']
         fl.save(fl.filename)
+
         f = Files(type=form.type.data,
                   name=form.name.data,
                   number=form.number.data,
@@ -148,11 +227,11 @@ def add_file():
                   timestamp_added_accepted=form.timestamp_accepted.data,
                   filepath=fl.filename,
                   key_words=form.key_words.data)
-        db.session.add(f)  # добавляем в бд
-        db.session.commit()  # сохраняем изменения
-        db.session.refresh(f)  # обновляем состояние объекта
+
+        db.session.add(f)
+        db.session.commit()
+        db.session.refresh(f)
 
         return redirect(url_for('index'))
 
     return render_template('checkpoint.html', form=form)
-
