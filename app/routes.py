@@ -137,10 +137,11 @@ def index():
             key_words_count = {}
             key_words = key_words.split(' ')
 
+            result = cur.fetchall()
 
-
-        if key_words != ['']:
+        if '' not in key_words:
             maxx = 0
+            flname_to_show = result[0][7]
             for i in range(len(result)):
                 res = ''
 
@@ -168,12 +169,17 @@ def index():
                 with sq.connect("app.db") as con:
                     cur = con.cursor()
 
-                    cur.execute("SELECT * FROM files WHERE filepath = ?", (flname_to_show, ))
+                    cur.execute("SELECT * FROM files WHERE filepath = ?", (flname_to_show,))
 
                     result = cur.fetchall()
         else:
-            result = cur.fetchall()
+            with sq.connect("app.db") as con:
+                cur = con.cursor()
 
+                cur.execute(work_string, args)
+
+                result = cur.fetchall()
+                print(1, result)
         return render_template('main.html', form=form, data=result)
 
     return render_template('main.html', data=result, form=form)
